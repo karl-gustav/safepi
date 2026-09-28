@@ -12,12 +12,18 @@ Run the agent with access to your host Docker daemon:
 make run
 ```
 
+Resume a pi session by passing `--session <sessionid>` before any folders:
+
+```sh
+./safepi --session SESSION_ID /path/to/project
+```
+
 Equivalent command:
 
 ```sh
 docker run -it --rm \
   -v "$PWD:/workspace" \
-  -v "$HOME/.pi:/root/.pi" \
+  -v "$HOME/.pi:/home/piuser/.pi" \
   -v /var/run/docker.sock:/var/run/docker.sock \
   pi-agent
 ```

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+
+mounts=()
+pi_args=()
+
+if [ "${1:-}" = "--session" ]; then
+  pi_args+=("--session" "$2")
+  shift 2
+fi
+
+mounts+=("-v" "$PWD:/workspace")
+
+for path in "$@"; do
+  abs_path="$(realpath "$path")"
+  name="$(basename "$abs_path")"
+
+  mounts+=("-v" "$abs_path:/workspace/$name")
+done
+
+docker run -it --rm \
+  "${mounts[@]}" \
+  -v "$HOME/.pi:/home/piuser/.pi" \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  pi-agent \
+  "${pi_args[@]}"

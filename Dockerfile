@@ -1,14 +1,15 @@
-FROM node:20-slim
+FROM node:22-slim
 
 RUN apt-get update && apt-get install -y \
     docker.io \
     git \
     curl \
     python3 \
+    golang-go \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-RUN npm install -g --ignore-scripts @earendil-works/pi-coding-agent
+RUN npm install --cache "" -g --ignore-scripts @earendil-works/pi-coding-agent@latest
 RUN pi install npm:@lpirito/pi-diffloop
 
 RUN useradd --create-home --shell /bin/bash piuser \
