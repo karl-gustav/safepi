@@ -1,18 +1,18 @@
-FROM node:22-slim
+FROM golang:1-alpine
 
-RUN apt-get update && apt-get install -y \
-    docker.io \
-    git \
+RUN apk add --no-cache \
+    bash \
+    build-base \
     curl \
-    python3 \
-    golang-go \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+    git \
+    nodejs \
+    npm \
+    python3
 
-RUN npm install --cache "" -g --ignore-scripts @earendil-works/pi-coding-agent@latest
-RUN pi install npm:@lpirito/pi-diffloop
+RUN npm install -g --ignore-scripts @earendil-works/pi-coding-agent@latest \
+    && npm cache clean --force
 
-RUN useradd --create-home --shell /bin/bash piuser \
+RUN adduser -D -s /bin/bash piuser \
     && mkdir -p /workspace /home/piuser/.pi \
     && chown -R piuser:piuser /workspace /home/piuser/.pi
 
@@ -20,5 +20,7 @@ WORKDIR /workspace
 
 USER piuser
 ENV HOME=/home/piuser
+
+RUN pi install npm:@lpirito/pi-diffloop
 
 ENTRYPOINT ["pi"]

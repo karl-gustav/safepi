@@ -1,7 +1,7 @@
 .PHONY: *
 
 build:
-	docker build -t pi-agent .
+	docker build -t safepi .
 
 run:
 	./safepi

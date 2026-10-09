@@ -15,12 +15,11 @@ for path in "$@"; do
   abs_path="$(realpath "$path")"
   name="$(basename "$abs_path")"
 
-  mounts+=("-v" "$abs_path:/workspace/$name")
+  mounts+=("-v" "$abs_path:/mnt/$name")
 done
 
 docker run -it --rm \
   "${mounts[@]}" \
   -v "$HOME/.pi:/home/piuser/.pi" \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  pi-agent \
+  safepi \
   "${pi_args[@]}"

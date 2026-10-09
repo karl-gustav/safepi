@@ -24,8 +24,6 @@ Equivalent command:
 docker run -it --rm \
   -v "$PWD:/workspace" \
   -v "$HOME/.pi:/home/piuser/.pi" \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  pi-agent
+  safepi
 ```
 
-Warning: mounting `/var/run/docker.sock` gives the container powerful control over host Docker. Only use this with trusted code/workspaces.
