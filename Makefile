@@ -1,7 +1,7 @@
 .PHONY: *
 
 build:
-	docker build -t safepi .
+	docker build  --no-cache -t safepi .
 
 run:
 	./safepi
